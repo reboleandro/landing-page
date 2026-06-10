@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tardeo San Juan - As Burgas</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* =========================================
+           VARIABLES DE COLOR "FUEGO Y NOCHE"
+           ========================================= */
+        :root {
+            --bg-dark: #020617; /* Azul noche profundo */
+            --bg-card: #0f172a; /* Fondo de las tarjetas */
+            --neon-orange: #F97316; /* Color fuego / Atardecer */
+            --neon-magenta: #EC4899; /* Toque fucsia eléctrico */
+            --text-white: #FFFFFF;
+            --text-gray: #CBD5E1;
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'Urbanist', sans-serif;
+        }
+
+        /* =========================================
+           RESET Y ESTILOS BASE
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-gray);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 130px; /* Espacio superior para el menú fijo */
+            padding-bottom: 100px; /* Espacio inferior para el botón de compra móvil */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-title);
+            color: var(--text-white);
+            text-transform: uppercase;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* =========================================
+           HEADER Y NAVEGACIÓN EN PÍLDORAS
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 900;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 0 10px 0;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area h1 {
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .logo-area span {
+            color: var(--neon-orange);
+            font-size: 14px;
+            font-family: var(--font-body);
+            font-weight: 700;
+        }
+
+        .nav-pills {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto; /* Desplazamiento horizontal en smartphones */
+            padding-bottom: 5px;
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        
+        .nav-pills::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .pill:hover, .pill.active {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--neon-orange);
+            border-color: rgba(249, 115, 22, 0.2);
+        }
+
+        .pill.highlight {
+            border-color: var(--neon-orange);
+            color: var(--neon-orange);
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+        }
+
+        /* =========================================
+           BOTÓN FLOTANTE (COMPRA DE ENTRADAS)
+           ========================================= */
+        .floating-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--neon-orange), var(--neon-magenta));
+            color: var(--text-white);
+            font-family: var(--font-title);
+            font-weight: 900;
+            font-size: 18px;
+            padding: 15px 40px;
+            border-radius: 50px;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            animation: pulse-neon 2.5s infinite;
+            text-align: center;
+            width: 85%;
+            max-width: 350px;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        @keyframes pulse-neon {
+            0% { 
+                box-shadow: 0 0 10px rgba(236, 72, 153, 0.4); 
+                transform: translateX(-50%) scale(1); 
+            }
+            50% { 
+                box-shadow: 0 0 25px rgba(249, 115, 22, 0.7), 0 0 15px rgba(236, 72, 153, 0.6); 
+                transform: translateX(-50%) scale(1.02); 
+            }
+            100% { 
+                box-shadow: 0 0 10px rgba(236, 72, 153, 0.4); 
+                transform: translateX(-50%) scale(1); 
+            }
+        }
+
+        /* =========================================
+           ESTILOS GENERALES DE SECCIONES
+           ========================================= */
+        section {
+            padding: 80px 0 60px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: -webkit-linear-gradient(0deg, #FFF, var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* =========================================
+           1. SECCIÓN: DESCRIPCIÓN
+           ========================================= */
+        .desc-text {
+            font-size: 17px;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--bg-card);
+        }
+
+        /* =========================================
+           2. SECCIÓN: LINE UP
+           ========================================= */
+        .dj-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Diseño asimétrico para mayor dinamismo visual */
+        .dj-card:nth-child(even) {
+            transform: translateY(20px);
+        }
+        
+        /* El último DJ ocupa el ancho completo en formato destacado */
+        .dj-card:last-child {
+            grid-column: 1 / -1;
+            transform: translateY(0);
+            margin-top: 20px;
+        }
+
+        .dj-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .dj-card .img-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dj-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(110%);
+            transition: all 0.4s ease;
+        }
+
+        .dj-info {
+            padding: 15px 5px 5px 5px;
+        }
+
+        .dj-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            transition: color 0.3s;
+        }
+
+        .dj-info p {
+            font-size: 13px;
+            color: var(--neon-magenta);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Interacción Hover: Activación de Color y Resplandor */
+        .dj-card:hover, .dj-card:active {
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 25px rgba(249, 115, 22, 0.25);
+            transform: translateY(-5px) !important;
+        }
+
+        .dj-card:hover img, .dj-card:active img {
+            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.05);
+        }
+
+        .dj-card:hover h3, .dj-card:active h3 {
+            color: var(--neon-orange);
+        }
+
+        .manifiesto {
+            background: rgba(249, 115, 22, 0.04);
+            border-left: 4px solid var(--neon-orange);
+            padding: 24px;
+            border-radius: 0 16px 16px 0;
+            font-style: italic;
+            font-size: 15px;
+            text-align: left;
+            margin-top: 40px;
+            box-shadow: inset 10px 0 20px rgba(0,0,0,0.2);
+        }
+
+        /* =========================================
+           3. SECCIÓN: GASTRONOMÍA
+           ========================================= */
+        .comida-item {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+        }
+
+        .comida-img-container {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .comida-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .comida-icon-box {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.01);
+            color: var(--neon-orange);
+        }
+
+        .comida-icon-box i {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .comida-texto h4 {
+            color: var(--text-white);
+            margin-bottom: 10px;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .comida-texto p {
+            font-size: 15px;
+            color: var(--text-gray);
+        }
+
+        /* =========================================
+           4. SECCIÓN: COLABORADORES
+           ========================================= */
+        .colab-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            align-items: center;
+        }
+
+        .colab-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 110px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .colab-card .colab-logo-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .colab-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.8);
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        /* Ajuste de color del contenedor de Dantone para mantener visibilidad del logo negro */
+        .colab-card.light-bg {
+            background: #FFFFFF;
+        }
+        .colab-card.light-bg img {
+            filter: none;
+            opacity: 1;
+        }
+
+        .colab-card:hover {
+            border-color: var(--neon-magenta);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.25);
+            transform: scale(1.03);
+        }
+
+        .colab-card:not(.light-bg):hover img {
+            filter: grayscale(0%) opacity(1);
+        }
+
+        /* =========================================
+           5. SECCIÓN: LOGÍSTICA & FAQ'S
+           ========================================= */
+        .logistica-info {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 19px;
+            line-height: 1.8;
+        }
+        .logistica-info span { 
+            color: var(--neon-orange); 
+            font-weight: bold; 
+        }
+
+        .map-container {
+            width: 100%;
+            height: 280px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-card);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            /* Filtro de estilo nocturno por software para Google Maps */
+            filter: invert(90%) hue-rotate(180deg) contrast(95%) saturate(120%);
+        }
+
+        /* FAQ - Sistema interactivo en Acordeón */
+        details {
+            background: var(--bg-card);
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--neon-orange);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.1);
+        }
+
+        summary {
+            padding: 18px 22px;
+            font-family: var(--font-title);
+            font-size: 16px;
+            color: var(--text-white);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            color: var(--neon-orange);
+            font-size: 24px;
+            transition: transform 0.3s;
+            font-weight: 400;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+            color: var(--neon-magenta);
+        }
+
+        .faq-content {
+            padding: 0 22px 22px 22px;
+            font-size: 15px;
+            color: var(--text-gray);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+        }
+
+        .faq-content i {
+            color: var(--neon-orange);
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        /* Fallbacks de Imagen para asegurar robustez visual */
+        .image-fallback {
+            background: #1e293b;
+            color: #475569;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* =========================================
+           PIE DE PÁGINA (FOOTER)
+           ========================================= */
+        footer {
+            text-align: center;
+            padding: 40px 0 60px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ig-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-white);
+            font-family: var(--font-title);
+            font-size: 16px;
+            background: rgba(255,255,255,0.04);
+            padding: 12px 30px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ig-link:hover {
+            color: var(--neon-magenta);
+            background: rgba(236, 72, 153, 0.08);
+            border-color: rgba(236, 72, 153, 0.3);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.15);
+        }
+
+        .ig-link i {
+            font-size: 22px;
+            background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* =========================================
+           VERSION ESCRITORIO (RESPONSIVE)
+           ========================================= */
+        @media (min-width: 768px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .dj-grid { 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 25px; 
+            }
+            
+            .dj-card:nth-child(even) { 
+                transform: translateY(0); 
+            } 
+            
+            .dj-card:last-child { 
+                grid-column: auto; 
+            }
+
+            .hero-img { 
+                height: 450px; 
+            }
+
+            .comida-item { 
+                flex-direction: row;
+                padding: 30px; 
+                gap: 40px;
+            }
+            
+            .comida-item.reverse {
+                flex-direction: row-reverse;
+            }
+
+            .comida-img-container, .comida-icon-box { 
+                width: 260px; 
+                height: 200px; 
+            }
+
+            .floating-btn { 
+                width: auto; 
+                font-size: 20px; 
+                padding: 18px 60px; 
+                bottom: 35px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <div>
+                    <h1>TARDEO SAN JUAN</h1>
+                    <span>AS BURGAS</span>
+                </div>
+            </div>
+            <nav class="nav-pills" id="main-nav">
+                <a href="#descripcion" class="pill active">Descripción</a>
+                <a href="#lineup" class="pill highlight">Line Up</a>
+                <a href="#comida" class="pill">Gastronomía</a>
+                <a href="#colaboradores" class="pill">Colaboradores</a>
+                <a href="#logistica" class="pill">FAQ's</a>
+            </nav>
+        </div>
+    </header>
+
+    <a href="https://site.fourvenues.com/es/tardeo-de-san-juan-ourense" target="_blank" rel="noopener" class="floating-btn">
+        COMPRAR ENTRADAS
+    </a>
+
+    <section id="descripcion">
+        <div class="container">
+            <h2 class="section-title">La Experiencia</h2>
+            <p class="desc-text">
+                El próximo 23 de junio, te esperamos desde las 18:30 h en As Burgas para vivir una celebración de San Juan diferente. Una tarde que se convertirá en noche y se alargará hasta las 02:30 h, en un entorno único donde la mejor música, la gastronomía y el ambiente festivo serán los grandes protagonistas.<br><br>
+                Ven a celebrar con nosotros el día más largo del año en una de las localizaciones más especiales de la ciudad. Música, amigos, buena comida y la magia de San Juan se unen para crear una experiencia inolvidable.
+            </p>
+            <img src="PHOTO-2026-06-09-23-04-41.jpg" alt="Centro de Interpretación de As Burgas" class="hero-img" onerror="handleImageError(this, 'Ubicación As Burgas')">
+        </div>
+    </section>
+
+    <section id="lineup">
+        <div class="container">
+            <h2 class="section-title">LINE UP 2026</h2>
+            
+            <div class="dj-grid">
+                <div class="dj-card">
+                    <div class="img-container">
+                        <img src="IMG_1085.jpg" alt="DJ Conde" onerror="handleImageError(this, 'DJ Conde')">
+                    </div>
+                    <div class="dj-info">
+                        <h3>DJ CONDE</h3>
+                        <p>House & Sunset Opening</p>
+                    </div>
+                </div>
+
+                <div class="dj-card">
+                    <div class="img-container">
+                        <img src="IMG_9751.jpg" alt="DJ Poppi" onerror="handleImageError(this, 'DJ Poppi')">
+                    </div>
+                    <div class="dj-info">
+                        <h3>DJ POPPI</h3>
+                        <p>Ritmo y Buen Ambiente</p>
+                    </div>
+                </div>
+
+                <div class="dj-card">
+                    <div class="img-container">
+                        <img src="IMG_9752.jpg" alt="DJ Codeso" onerror="handleImageError(this, 'DJ Codeso')">
+                    </div>
+                    <div class="dj-info">
+                        <h3>DJ CODESO</h3>
+                        <p>Sonidos Comerciales</p>
+                    </div>
+                </div>
+
+                <div class="dj-card">
+                    <div class="img-container">
+                        <img src="IMG_9753.JPG" alt="DJ Fragata" onerror="handleImageError(this, 'DJ Fragata')">
+                    </div>
+                    <div class="dj-info">
+                        <h3>DJ FRAGATA</h3>
+                        <p>Fiesta, Hits y Energía</p>
+                    </div>
+                </div>
+
+                <div class="dj-card">
+                    <div class="img-container">
+                        <img src="IMG_9755.jpg" alt="DJ Reque" onerror="handleImageError(this, 'DJ Reque')">
+                    </div>
+                    <div class="dj-info">
+                        <h3>DJ REQUE</h3>
+                        <p>Urban Sounds</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="manifiesto">
+                "San Xoán Ourense 2026 nace con el objetivo de convertirse en una cita imprescindible del verano gallego. Un encuentro donde la música en directo, el talento local, la gastronomía, el entorno natural y una producción cuidada se fusionan para crear una experiencia única desde la puesta de sol hasta la madrugada."
+            </div>
+        </div>
+    </section>
+
+    <section id="comida">
+        <div class="container">
+            <h2 class="section-title">GASTRONOMÍA</h2>
+            
+            <div class="comida-item">
+                <div class="comida-img-container">
+                    <img src="image_c44a83.jpg" alt="Maestro del Arroz" class="comida-img" onerror="handleImageError(this, 'Maestro del Arroz')">
+                </div>
+                <div class="comida-texto">
+                    <h4>Tradición a las Brasas</h4>
+                    <p>Guardían del fuego y maestro del arroz. Será quien transforme ingredientes sencillos en grandes paellas, controlando tiempos, brasas y sabores para ofrecer una experiencia que reúna a todos alrededor de la mejor tradición gastronómica. Porque una buena paella no solo se cocina: se comparte.</p>
+                </div>
+            </div>
+
+            <div class="comida-item reverse">
+                <div class="comida-icon-box">
+                    <i class="fa-solid fa-burger"></i>
+                    <span>Street Food</span>
+                </div>
+                <div class="comida-texto">
+                    <h4>Smash Burgers & Teasers</h4>
+                    <p>El tardeo no solo se baila, se saborea. Estamos preparando una selección gastronómica alternativa ultra cañera para disfrutar de noche. Hamburguesas jugosas, patatas crujientes y aperitivos que te llenarán de energía para seguir bailando sin parar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="colaboradores">
+        <div class="container">
+            <h2 class="section-title">COLABORADORES</h2>
+            <div class="colab-grid">
+                <div class="colab-card">
+                    <div class="colab-logo-container">
+                        <img src="PHOTO-2026-06-09-22-40-23 3.jpg" alt="Dame Après Paris" onerror="handleImageError(this, 'Dame Après Paris')">
+                    </div>
+                </div>
+                <div class="colab-card light-bg">
+                    <div class="colab-logo-container">
+                        <img src="PHOTO-2026-06-09-22-40-23.jpg" alt="Dantone" onerror="handleImageError(this, 'Dantone')">
+                    </div>
+                </div>
+                <div class="colab-card">
+                    <div class="colab-logo-container">
+                        <img src="PHOTO-2026-06-09-22-40-23 2.jpg" alt="4 Elementos" onerror="handleImageError(this, '4 Elementos')">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="logistica">
+        <div class="container">
+            <h2 class="section-title">INFORMACIÓN Y FAQ'S</h2>
+            
+            <p class="logistica-info">
+                <span><i class="fa-regular fa-calendar-days"></i> FECHA:</span> Martes, 23 de Junio, 2026<br>
+                <span><i class="fa-regular fa-clock"></i> HORARIO:</span> 18:30 h - 02:30 h<br>
+                <span><i class="fa-solid fa-location-dot"></i> LUGAR:</span> Centro de Interpretación de As Burgas, Ourense
+            </p>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2938.868177579192!2d-7.865910784534127!3d42.33383497918844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2ffeb333df2f21%3A0xc340be38e4a83c3f!2sCentro%20de%20Interpretaci%C3%B3n%20das%20Burgas!5e0!3m2!1ses!2ses!4v1701234567890!5m2!1ses!2ses" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <details>
+                <summary>Dress Code</summary>
+                <div class="faq-content">
+                    <i class="fa-solid fa-shirt"></i> El estilo recomendado es <strong>Casual</strong>. Queremos que vengas cómodo, fresco y con tu propio toque urbano. Recuerda que la organización se reserva en última instancia el derecho de admisión.
+                </div>
+            </details>
+            
+            <details>
+                <summary>¿Se puede fumar dentro de las instalaciones?</summary>
+                <div class="faq-content">
+                    <i class="fa-solid fa-smoking"></i> Sí, el evento cuenta con amplios espacios habilitados al aire libre dentro del recinto donde está <strong>permitido fumar</strong>.
+                </div>
+            </details>
+            
+            <details>
+                <summary>Edad Mínima de Acceso</summary>
+                <div class="faq-content">
+                    <i class="fa-solid fa-id-card"></i> El evento está restringido estrictamente para mayores de <strong>+18 años</strong>. Será obligatorio presentar el DNI original o pasaporte vigente en los accesos para verificar la edad. No se admitirán copias ni fotos del documento.
+                </div>
+            </details>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <a href="https://instagram.com/txpeventos" target="_blank" rel="noopener" class="ig-link">
+                <i class="fa-brands fa-instagram"></i> @txpeventos
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Función de seguridad por si alguna imagen falta en local
+        function handleImageError(image, label) {
+            const container = image.parentElement;
+            container.innerHTML = '';
+            
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'image-fallback';
+            fallbackDiv.style.width = '100%';
+            fallbackDiv.style.height = '100%';
+            fallbackDiv.style.border = '1px dashed var(--neon-orange)';
+            fallbackDiv.style.boxShadow = 'inset 0 0 10px rgba(249, 115, 22, 0.2)';
+            fallbackDiv.style.color = 'var(--text-white)';
+            fallbackDiv.style.fontFamily = 'var(--font-title)';
+            fallbackDiv.innerHTML = `<span style="font-size: 11px;">[ ${label} ]</span>`;
+            
+            container.appendChild(fallbackDiv);
+        }
+
+        // Script para iluminar dinámicamente las píldoras activas en el menú según el scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navPills = document.querySelectorAll('#main-nav a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Se activa cuando la sección está cerca del centro de la pantalla
+                    if (pageYOffset >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navPills.forEach(pill => {
+                    pill.classList.remove('active');
+                    if (pill.getAttribute('href') === `#${current}`) {
+                        pill.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
